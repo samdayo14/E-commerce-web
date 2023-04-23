@@ -1,0 +1,70 @@
+<nav class="sticky top-0 z-50 w-screen">
+  <div
+    class="bg-gray-100 h-16 flex flex-row justify-between shadow-lg md:flex md:items-center md:justify-between"
+  >
+    <div class="pt-2">
+      <h1 class="md:text-2xl text-xl font-bold text-black">NY COLLECTION</h1>
+    </div>
+    <!-- menu button -->
+    <button
+      class="block md:hidden pb-3 cursor-pointer"
+      (click)="toggleMobileMenu()"
+    >
+      <img
+        src="assets/burger-menu-svgrepo.svg"
+        *ngIf="!isMobileMenuOpen"
+        alt=""
+      />
+      <span class="text-4xl pb-3 mr-2" *ngIf="isMobileMenuOpen">X</span>
+    </button>
+
+    <!-- Desktop view -->
+    <div class="hidden md:block rounded">
+      <ul class="flex">
+        <li class="mx-4 my-2 text-black cursor-pointer">
+          <a class="cursor-pointer hover:text-gray-400" routerLink="/">Home</a>
+        </li>
+        <li class="mx-4 my-2 text-black cursor-pointer">
+          <a class="cursor-pointer hover:text-gray-400" routerLink="/product"
+            >Products</a
+          >
+        </li>
+        <li class="mx-4 my-2 text-black cursor-pointer">
+          <a
+            class="cursor-pointer hover:text-gray-400"
+            routerLink="/add-to-cart"
+            >Add-To-Cart🛒</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- mobile view -->
+  <div
+    class="block md:hidden bg-gray-100 w-screen h-full mt-[-20px]"
+    *ngIf="isMobileMenuOpen"
+  >
+    <ul class="text-center">
+      <li class="mx-4 my-2 text-black cursor-pointer">
+        <a class="cursor-pointer hover:text-gray-400 text-xl" routerLink="/"
+          >Home</a
+        >
+      </li>
+      <li class="mx-4 my-2 text-black cursor-pointer">
+        <a
+          class="cursor-pointer hover:text-gray-400 text-xl"
+          routerLink="/product"
+          >Products</a
+        >
+      </li>
+      <li class="mx-4 my-2 text-black cursor-pointer">
+        <a
+          class="cursor-pointer hover:text-gray-400 text-xl"
+          routerLink="/add-to-cart"
+          >Add-To-Cart🛒</a
+        >
+      </li>
+    </ul>
+  </div>
+</nav>

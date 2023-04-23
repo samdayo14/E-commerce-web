@@ -1,0 +1,31 @@
+<div class="">
+  <div *ngIf="productId" class="grid md:grid-cols-2 mx-auto">
+    <img
+      class="w-80 h-auto mx-auto"
+      src="{{ productId.image }}"
+      alt="{{ productId.title }}"
+    />
+    <div class="">
+      <h4 class="text-2xl font-normal text-gray-600 mb-3">
+        {{ productId.category.toUpperCase() }}
+      </h4>
+      <h1 class="text-5xl font-normal text-gray-600 mb-3">
+        {{ productId.title }}
+      </h1>
+      <p class="text-lg text-gray-600 mb-4">
+        Rating {{ productId.rating && productId.rating.rate }}⭐
+      </p>
+      <span class="text-black text-4xl font-bold mb-4"
+        >${{ productId.price }}</span
+      >
+      <p class="text-lg mb-9">{{ productId.description }}</p>
+
+      <button
+        class="transition delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300 px-6 py-2 ease-in-out text-white rounded"
+        (click)="addToCart(productId)"
+      >
+        Add to cart
+      </button>
+    </div>
+  </div>
+</div>

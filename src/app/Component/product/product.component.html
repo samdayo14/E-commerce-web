@@ -1,0 +1,40 @@
+<h2 class="flex justify-center md:text-7xl text-4xl mb-12 mt-12 font-normal">
+  Latest product
+</h2>
+<div class="flex md:gap-4 gap-2 justify-center">
+  <a
+    *ngFor="let category of $categories | async; trackBy: trackCategories"
+    (click)="getProducts(category)"
+    class="md:text-xl text-sm font-medium border border-black rounded-lg p-2 hover:bg-black hover:text-white hover:cursor-pointer"
+    [ngClass]="{
+      'bg-black text-white':
+        category.toLowerCase() === selectedCategory.toLowerCase()
+    }"
+    >{{ category }}</a
+  >
+</div>
+<span class="pt-4 mb-4 flex flex-col">
+  <span class="border-b-2"></span>
+</span>
+
+<div class="pt-7 grid md:grid-cols-4 grid-cols-2 md:gap-4 gap-2 text-center">
+  <div *ngFor="let d of $products | async">
+    <div
+      class="h-[100%] md:w-[285px] w-[190px] rounded overflow-hidden shadow-lg border border-gray-400"
+    >
+      <img class="h-[250px] mx-auto" src="{{ d.image }}" alt="{{ d.title }}" />
+      <div class="px-6 py-4">
+        <div class="font-bold md:text-xl text-sm mb-2">
+          {{ d.title.substring(0, 12) }}...
+        </div>
+        <p class="text-black text-xl font-bold pb-4">${{ d.price }}</p>
+        <a
+          class="text-xl font-medium border border-black rounded-lg p-2 hover:bg-black hover:text-white"
+          [routerLink]="['/productId/' + d.id]"
+        >
+          Buy Now
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
