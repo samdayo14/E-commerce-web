@@ -1,12 +1,8 @@
-import { Component, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/product';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
-  Validators,
 } from '@angular/forms';
 
 import { ProjectServiceService } from 'src/app/service/project.service.service';
@@ -16,39 +12,75 @@ import { ProjectServiceService } from 'src/app/service/project.service.service';
   templateUrl: './add-to-cart.component.html',
   styleUrls: ['./add-to-cart.component.css'],
 })
-export class AddToCartComponent {
-  $forms = '';
+export class AddToCartComponent{
+ form:FormGroup
   errorMessage = '';
+  errorAddress = '';
   items = this.service.getItems();
+  item$:Product[]=[]
 
-  checkoutForm = this.formBuilder.group({
-    name: '',
-    address: '',
-  });
+
   constructor(
     private service: ProjectServiceService,
-    private formBuilder: FormBuilder,
-    private route: ActivatedRoute
-  ) {}
+    private fb: FormBuilder,
+  ) {
+    this.form = this.fb.nonNullable.group({
+      name: this.fb.nonNullable.control(''),
+      address: this.fb.nonNullable.control(''),
+    });
+    
+  }
 
-  ngOnInit(): void {}
+  // ngOnInit(): void {
+  //   const storedItems = localStorage.getItem('cartItems');
+  // this.items = storedItems ? JSON.parse(storedItems) : [];
+  // }
 
   addToCart(product: Product) {
     this.service.addToCart(product);
-    window.alert('Your product has been added to the cart!');
+    // this.updateLocalStorage();
   }
 
-  onSubmit(): void {
-    if (!this.$forms) {
+  onSubmit(event:Event): void {
+    const {name, address} = this.form.value
+    if (name === '') {
       this.errorMessage = "Name can't be empty";
-      setTimeout(() => {
-        this.errorMessage = '';
-      }, 5000);
     } else {
-      this.errorMessage = '';
+      this.errorMessage = ''
     }
-    this.items = this.service.clearCart();
-    console.log('you have submitted you orders!', this.checkoutForm.value);
-    this.checkoutForm.reset();
+    if(address === '') {
+      this.errorAddress = "Address can't be empty"
+    } else {
+      this.errorAddress = ""
+    }
+
+    if (name !== '' || address !== '') {
+      this.items = this.service.clearCart();
+      // this.updateLocalStorage()
+    }
+     this.form.reset()
+
+   
   }
+  
+
+
+  deleteItem(id:number){
+    const index = this.items.findIndex(item => item.id === id)
+
+    if(index !== 1) {
+      this.items.splice(index,1);
+      // this.updateLocalStorage();
+    }
+  }
+
+  total() {
+    return this.items.reduce((acc,item) => 
+       acc + item.price,0)
+  }
+
+  // private updateLocalStorage(): void {
+  // console.log('Updating local storage:', this.items);
+  //   localStorage.setItem('cartItems', JSON.stringify(this.items));
+  // }
 }
