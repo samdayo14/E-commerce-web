@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, retry } from 'rxjs/operators';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { CartItem } from '../cart-item';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { Product } from '../product';
 
 @Injectable({
@@ -17,6 +16,7 @@ export class ProjectServiceService {
   addToCart(product: Product) {
     this.items.push(product);
   }
+  
 
   getItems() {
     return this.items;
